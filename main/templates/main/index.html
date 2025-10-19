@@ -1,0 +1,664 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% if home_content %}{{ home_content.meta_title }}{% else %}Cinnamon Chalet - Luxury Hotel & Resort{% endif %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="{% if home_content %}{{ home_content.meta_description }}{% else %}Experience luxury accommodation at Cinnamon Chalet. Enjoy premium amenities, exquisite dining, and unforgettable stays.{% endif %}" />
+    <meta name="keywords" content="{% if home_content %}{{ home_content.meta_keywords }}{% else %}luxury hotel, resort, accommodation, dining, events, cinnamon chalet{% endif %}" />
+    <meta name="author" content="Cinnamon Chalet" />
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    
+    <header class="site-header js-site-header">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-6 col-lg-4 site-logo" data-aos="fade"><a href="{% url 'home' %}">Cinnamon Chalet</a></div>
+          <div class="col-6 col-lg-8">
+
+            <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <!-- END menu-toggle -->
+
+            <div class="site-navbar js-site-navbar">
+              <nav role="navigation">
+                <div class="container">
+                  <div class="row full-height align-items-center">
+                    <div class="col-md-6 mx-auto">
+                      <ul class="list-unstyled menu">
+                        <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'rooms' %}">Rooms</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'events' %}">Events</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- END head -->
+
+    <!-- Dynamic Header Section -->
+    <section class="site-hero overlay" style="background-image: url({% if header_image %}{{ header_image.image.url }}{% else %}{% static 'images/hero_4.jpg' %}{% endif %})" data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row site-hero-inner justify-content-center align-items-center">
+          <div class="col-md-10 text-center" data-aos="fade-up">
+            <span class="custom-caption text-uppercase text-white d-block mb-3">
+              Welcome To Cinnamon <span class="fa fa-star text-primary"></span> Paradise
+            </span>
+            <h1 class="heading">A Best Place To Stay</h1>
+            {% if header_image and header_image.subtitle %}
+            <p class="text-white mt-3">{{ header_image.subtitle }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <a class="mouse smoothscroll" href="#next">
+        <div class="mouse-icon">
+          <span class="mouse-wheel"></span>
+        </div>
+      </a>
+    </section>
+    <!-- END section -->
+
+    <!-- Enhanced Booking.com Redirect -->
+    <section class="section bg-light pb-0">
+      <div class="container">
+        <div class="row check-availabilty" id="next">
+          <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
+            <form id="bookingRedirectForm">
+              <div class="row">
+                <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                  <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
+                  <div class="field-icon-wrap">
+                    <div class="icon"><span class="icon-calendar"></span></div>
+                    <input type="date" id="checkin_date" class="form-control" min="{{ today }}">
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+                  <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
+                  <div class="field-icon-wrap">
+                    <div class="icon"><span class="icon-calendar"></span></div>
+                    <input type="date" id="checkout_date" class="form-control" min="{{ tomorrow }}">
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
+                  <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                      <label for="adults" class="font-weight-bold text-black">Adults</label>
+                      <div class="field-icon-wrap">
+                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                        <select id="adults" class="form-control">
+                          <option value="1">1</option>
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3 mb-md-0">
+                      <label for="children" class="font-weight-bold text-black">Children</label>
+                      <div class="field-icon-wrap">
+                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                        <select id="children" class="form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3 align-self-end">
+                  <button type="button" id="redirectToBooking" class="btn btn-primary btn-block text-white">Check Availability</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set min dates
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        
+        document.getElementById('checkin_date').min = today.toISOString().split('T')[0];
+        document.getElementById('checkout_date').min = tomorrow.toISOString().split('T')[0];
+        
+        // Redirect to Booking.com with parameters
+        document.getElementById('redirectToBooking').addEventListener('click', function() {
+            const checkin = document.getElementById('checkin_date').value;
+            const checkout = document.getElementById('checkout_date').value;
+            const adults = document.getElementById('adults').value;
+            const children = document.getElementById('children').value;
+            
+            let bookingUrl = 'https://www.booking.com/hotel/lk/pasidu-villa-athuraliya.en-gb.html';
+            
+            // Add parameters if dates are selected
+            if (checkin && checkout) {
+                bookingUrl += `?checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&group_children=${children}`;
+            }
+            
+            window.open(bookingUrl, '_blank');
+        });
+    });
+    </script>
+    <!-- Welcome Section - Dynamic -->
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12 col-lg-7 ml-auto order-lg-2 position-relative mb-5" data-aos="fade-up">
+            <figure class="img-absolute">
+              <img src="{% static 'images/food-1.jpg' %}" alt="Image" class="img-fluid">
+            </figure>
+            <img src="{% static 'images/img_1.jpg' %}" alt="Image" class="img-fluid rounded">
+          </div>
+          <div class="col-md-12 col-lg-4 order-lg-1" data-aos="fade-up">
+            <h2 class="heading">{% if home_content.welcome_title %}{{ home_content.welcome_title }}{% else %}Welcome!{% endif %}</h2>
+            <p class="mb-4">{% if home_content.welcome_description %}{{ home_content.welcome_description }}{% else %}Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.{% endif %}</p>
+            <p><a href="{% if home_content.learn_more_link %}{{ home_content.learn_more_link }}{% else %}#{% endif %}" class="btn btn-primary text-white py-2 mr-3">
+              {% if home_content.learn_more_text %}{{ home_content.learn_more_text }}{% else %}Learn More{% endif %}
+            </a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photos Section - Dynamic -->
+    <section class="section slider-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">{% if home_content.photos_title %}{{ home_content.photos_title }}{% else %}Photos{% endif %}</h2>
+            <p data-aos="fade-up" data-aos-delay="100">{% if home_content.photos_description %}{{ home_content.photos_description }}{% else %}Explore our beautiful hotel through these stunning photographs showcasing our facilities, rooms, and amenities.{% endif %}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="home-slider major-caousel owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
+              {% for gallery_item in room_gallery %}
+              <div class="slider-item">
+                <a href="{{ gallery_item.image.url }}" data-fancybox="images" data-caption="{{ gallery_item.title }}">
+                  <img src="{{ gallery_item.image.url }}" alt="{{ gallery_item.title }}" class="img-fluid">
+                </a>
+              </div>
+              {% empty %}
+              <!-- Fallback static images -->
+              <div class="slider-item">
+                <a href="{% static 'images/slider-1.jpg' %}" data-fancybox="images" data-caption="Hotel Lobby">
+                  <img src="{% static 'images/slider-1.jpg' %}" alt="Hotel Lobby" class="img-fluid">
+                </a>
+              </div>
+              <div class="slider-item">
+                <a href="{% static 'images/slider-2.jpg' %}" data-fancybox="images" data-caption="Swimming Pool">
+                  <img src="{% static 'images/slider-2.jpg' %}" alt="Swimming Pool" class="img-fluid">
+                </a>
+              </div>
+              <div class="slider-item">
+                <a href="{% static 'images/slider-3.jpg' %}" data-fancybox="images" data-caption="Restaurant">
+                  <img src="{% static 'images/slider-3.jpg' %}" alt="Restaurant" class="img-fluid">
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+    
+    <!-- Restaurant Menu Section - Dynamic -->
+    <section class="section bg-image overlay" style="background-image: url('{% static 'images/hero_3.jpg' %}');">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading text-white" data-aos="fade">{% if home_content.menu_title %}{{ home_content.menu_title }}{% else %}Our Unique Menu{% endif %}</h2>
+            <p class="text-white" data-aos="fade" data-aos-delay="100">{% if home_content.menu_description %}{{ home_content.menu_description }}{% else %}Experience culinary excellence with our diverse menu featuring the finest ingredients and innovative dishes prepared by our expert chefs.{% endif %}</p>
+          </div>
+        </div>
+        <div class="food-menu-tabs" data-aos="fade">
+          <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active letter-spacing-2" id="mains-tab" data-toggle="tab" href="#mains" role="tab" aria-controls="mains" aria-selected="true">Mains</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link letter-spacing-2" id="desserts-tab" data-toggle="tab" href="#desserts" role="tab" aria-controls="desserts" aria-selected="false">Desserts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link letter-spacing-2" id="drinks-tab" data-toggle="tab" href="#drinks" role="tab" aria-controls="drinks" aria-selected="false">Drinks</a>
+            </li>
+          </ul>
+          <div class="tab-content py-5" id="myTabContent">
+            
+            <!-- Mains Tab -->
+            <div class="tab-pane fade show active text-left" id="mains" role="tabpanel" aria-labelledby="mains-tab">
+              <div class="row">
+                <div class="col-md-6">
+                  {% for item in mains %}
+                  {% if forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$20.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">Murgh Tikka Masala</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="col-md-6">
+                  {% for item in mains %}
+                  {% if not forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$10.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">French Toast Combo</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Desserts Tab -->
+            <div class="tab-pane fade text-left" id="desserts" role="tabpanel" aria-labelledby="desserts-tab">
+              <div class="row">
+                <div class="col-md-6">
+                  {% for item in desserts %}
+                  {% if forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$11.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">Banana Split</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="col-md-6">
+                  {% for item in desserts %}
+                  {% if not forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$42.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">Apple Strudel</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Drinks Tab -->
+            <div class="tab-pane fade text-left" id="drinks" role="tabpanel" aria-labelledby="drinks-tab">
+              <div class="row">
+                <div class="col-md-6">
+                  {% for item in drinks %}
+                  {% if forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$32.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">Spring Water</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="col-md-6">
+                  {% for item in drinks %}
+                  {% if not forloop.counter0|divisibleby:2 %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">${{ item.price }}</span>
+                    <h3 class="text-white"><a href="#" class="text-white">{{ item.name }}</a></h3>
+                    <p class="text-white text-opacity-7">{{ item.description }}</p>
+                  </div>
+                  {% endif %}
+                  {% empty %}
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3">$18.00</span>
+                    <h3 class="text-white"><a href="#" class="text-white">Lemonade, Lemon Squash</a></h3>
+                    <p class="text-white text-opacity-7">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Testimonials Section - Dynamic -->
+    <section class="section testimonial-section">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">{% if home_content.testimonials_title %}{{ home_content.testimonials_title }}{% else %}What Our Guests Say{% endif %}</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
+            {% for testimonial in testimonials %}
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                {% if testimonial.image %}
+                <img src="{{ testimonial.image.url }}" alt="{{ testimonial.customer_name }}" class="rounded-circle mx-auto">
+                {% else %}
+                <img src="{% static 'images/person_1.jpg' %}" alt="{{ testimonial.customer_name }}" class="rounded-circle mx-auto">
+                {% endif %}
+              </div>
+              <blockquote>
+                <p>&ldquo;{{ testimonial.content }}&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; {{ testimonial.customer_name }}{% if testimonial.position %}, {{ testimonial.position }}{% endif %}</em></p>
+              <div class="rating">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= testimonial.rating %}
+                  <span class="fa fa-star text-primary"></span>
+                  {% else %}
+                  <span class="fa fa-star text-muted"></span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            {% empty %}
+            <!-- Fallback testimonials -->
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="{% static 'images/person_1.jpg' %}" alt="Jean Smith" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+                <p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; Jean Smith</em></p>
+              <div class="rating">
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+              </div>
+            </div>
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="{% static 'images/person_2.jpg' %}" alt="John Doe" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+              <div class="rating">
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-muted"></span>
+              </div>
+            </div>
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="{% static 'images/person_3.jpg' %}" alt="Jane Smith" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+                <p>&ldquo;A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; Jane Smith</em></p>
+              <div class="rating">
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-primary"></span>
+                <span class="fa fa-star text-muted"></span>
+                <span class="fa fa-star text-muted"></span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section - Dynamic -->
+    <section class="section blog-post-entry bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">{% if home_content.events_title %}{{ home_content.events_title }}{% else %}Latest Events{% endif %}</h2>
+            <p data-aos="fade-up">{% if home_content.events_description %}{{ home_content.events_description }}{% else %}Stay updated with our latest events and happenings. Join us for memorable experiences.{% endif %}</p>
+          </div>
+        </div>
+        <div class="row">
+          {% for event in events %}
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 post" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:100 }}">
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block">
+                <img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid">
+              </a>
+              <div class="media-body">
+                <span class="meta-post">{{ event.event_date }}</span>
+                <h2 class="mt-0 mb-3"><a href="#">{{ event.title }}</a></h2>
+                <p>{{ event.description|truncatewords:20 }}</p>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <!-- Fallback events -->
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 post" data-aos="fade-up" data-aos-delay="100">
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block"><img src="{% static 'images/img_1.jpg' %}" alt="Event" class="img-fluid"></a>
+              <div class="media-body">
+                <span class="meta-post">February 26, 2018</span>
+                <h2 class="mt-0 mb-3"><a href="#">Travel Hacks to Make Your Flight More Comfortable</a></h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-image overlay" style="background-image: url('{% static 'images/hero_4.jpg' %}');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
+            <h2 class="text-white font-weight-bold">A Best Place To Stay. Reserve Now!</h2>
+          </div>
+          <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
+             <a href="https://www.booking.com/hotel/lk/pasidu-villa-athuraliya.en-gb.html?aid=2311236&label=en-lk-booking-desktop-IncWB4CtfrbYgbu3xC6gmwS652796017434%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-334108349%3Alp1009919%3Ali%3Adec%3Adm&sid=e936929ac10877552d1b098cb7e3d603&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&srepoch=1759665948&srpvid=68cd55067ef80849&type=total&ucfs=1&" class="btn btn-outline-white-primary py-3 text-white px-5">Reserve Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section footer-section">
+      <div class="container">
+        <div class="row mb-4">
+          
+          <!-- Legal Links -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Legal</h3>
+            <ul class="list-unstyled link">
+              <li class="mb-2"><a href="#" class="text-muted">Terms &amp; Conditions</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Privacy Policy</a></li>
+              <li><a href="#" class="text-muted">Cookie Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Explore</h3>
+            <ul class="list-unstyled link">
+              <li class="mb-2"><a href="{% url 'rooms' %}" class="text-muted">Rooms &amp; Suites</a></li>
+              <li class="mb-2"><a href="{% url 'about' %}" class="text-muted">About Us</a></li>
+              <li class="mb-2"><a href="{% url 'contact' %}" class="text-muted">Contact Us</a></li>
+              <li><a href="{% url 'events' %}" class="text-muted">Events</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Visit Us</h3>
+            <div class="contact-info">
+              <p class="mb-3">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-location h5 mr-2 text-primary"></span>
+                  Address:
+                </span>
+                <span class="text-muted">261/69, Prime Elite<br>Thalgasgoda Road<br>Ambalangoda, Sri Lanka</span>
+              </p>
+              <p class="mb-3">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-telephone h5 mr-2 text-primary"></span>
+                  Phone:
+                </span>
+                <a href="tel:+94774005317" class="text-muted">+94 77 400 5317</a>
+              </p>
+              <p class="mb-0">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-email h5 mr-2 text-primary"></span>
+                  Email:
+                </span>
+                <a href="mailto:cinnamonchalet33@gmail.com" class="text-muted">cinnamonchalet33@gmail.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Get In Touch & Social -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Connect</h3>
+            
+            <!-- Contact Methods -->
+            <div class="contact-methods mb-4">
+              <p class="mb-2">
+                <span class="fa fa-phone text-primary mr-2"></span>
+                <a href="tel:+94774005317" class="text-muted">Call Us</a>
+              </p>
+              <p class="mb-2">
+                <span class="fa fa-whatsapp text-primary mr-2"></span>
+                <a href="https://wa.me/94774005317" class="text-muted" target="_blank">WhatsApp</a>
+              </p>
+              <p class="mb-3">
+                <span class="fa fa-envelope text-primary mr-2"></span>
+                <a href="mailto:cinnamonchalet33@gmail.com" class="text-muted">Email Us</a>
+              </p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+              <h4 class="text-uppercase h6 mb-2">Follow Us</h4>
+              <div class="d-flex">
+                <a href="#" class="text-muted mr-3" aria-label="Facebook" title="Follow us on Facebook">
+                  <span class="fa fa-facebook fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted mr-3" aria-label="Instagram" title="Follow us on Instagram">
+                  <span class="fa fa-instagram fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted mr-3" aria-label="TripAdvisor" title="Check us on TripAdvisor">
+                  <span class="fa fa-tripadvisor fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted" aria-label="Twitter" title="Follow us on Twitter">
+                  <span class="fa fa-twitter fa-lg"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Copyright & Bottom Social -->
+        <div class="row pt-5 border-top">
+          <div class="col-md-6">
+            <p class="text-muted mb-0">
+              Copyright &copy; <script>document.write(new Date().getFullYear());</script> 
+              Cinnamon Chalet. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 text-md-right">
+            <div class="social">
+              <a href="#" class="text-muted mr-3" aria-label="TripAdvisor">
+                <span class="fa fa-tripadvisor"></span>
+              </a>
+              <a href="#" class="text-muted mr-3" aria-label="Facebook">
+                <span class="fa fa-facebook"></span>
+              </a>
+              <a href="#" class="text-muted mr-3" aria-label="Instagram">
+                <span class="fa fa-instagram"></span>
+              </a>
+              <a href="#" class="text-muted" aria-label="Twitter">
+                <span class="fa fa-twitter"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/aos.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script> 
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script> 
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

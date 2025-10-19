@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>cinnamon chalet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fancybox.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/fontawesome/css/font-awesome.min.css' %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    
+    <header class="site-header js-site-header">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-6 col-lg-4 site-logo" data-aos="fade"><a href="{% url 'home' %}">Cinnamon Chalet</a></div>
+          <div class="col-6 col-lg-8">
+            <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <div class="site-navbar js-site-navbar">
+              <nav role="navigation">
+                <div class="container">
+                  <div class="row full-height align-items-center">
+                    <div class="col-md-6 mx-auto">
+                      <ul class="list-unstyled menu">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'rooms' %}">Rooms</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li class="active"><a href="{% url 'events' %}">Events</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dynamic Hero Section -->
+    <section class="site-hero inner-page overlay" 
+             style="background-image: url({% if events_header %}{{ events_header.image.url }}{% else %}{% static 'images/hero_4.jpg' %}{% endif %})" 
+             data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row site-hero-inner justify-content-center align-items-center">
+          <div class="col-md-10 text-center" data-aos="fade">
+            <h1 class="heading mb-3">{% if events_header %}{{ events_header.title }}{% else %}Events{% endif %}</h1>
+            {% if events_header and events_header.subtitle %}
+            <p class="mb-4">{{ events_header.subtitle }}</p>
+            {% endif %}
+            <ul class="custom-breadcrumbs mb-4">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>&bullet;</li>
+              <li>Events</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <a class="mouse smoothscroll" href="#next">
+        <div class="mouse-icon">
+          <span class="mouse-wheel"></span>
+        </div>
+      </a>
+    </section>
+
+    <!-- Events Section - Dynamic -->
+    <section class="section blog-post-entry bg-light" id="next">
+      <div class="container">
+        
+        <div class="row">
+          {% for event in events %}
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 post mb-5" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:'0' }}00">
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block">
+                {% if event.image %}
+                  <img src="{{ event.image.url }}" alt="{{ event.title }}" class="img-fluid">
+                {% else %}
+                  <img src="{% static 'images/img_1.jpg' %}" alt="{{ event.title }}" class="img-fluid">
+                {% endif %}
+              </a>
+              <div class="media-body">
+                <span class="meta-post">{{ event.event_date|date:"F d, Y" }}</span>
+                <h2 class="mt-0 mb-3"><a href="#">{{ event.title }}</a></h2>
+                <p>{{ event.description|truncatewords:30 }}</p>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12 text-center">
+            <div class="alert alert-info" data-aos="fade-up">
+              <h3>No Events Available</h3>
+              <p>Check back later for upcoming events at Sogo Hotel.</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Pagination (you can implement this later if needed) -->
+        {% if events.has_other_pages %}
+        <div class="row" data-aos="fade">
+          <div class="col-12">
+            <div class="custom-pagination">
+              <ul class="list-unstyled">
+                {% if events.has_previous %}
+                  <li><a href="?page={{ events.previous_page_number }}">&laquo;</a></li>
+                {% endif %}
+                
+                {% for i in events.paginator.page_range %}
+                  {% if events.number == i %}
+                    <li class="active"><span>{{ i }}</span></li>
+                  {% else %}
+                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                
+                {% if events.has_next %}
+                  <li><a href="?page={{ events.next_page_number }}">&raquo;</a></li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="section bg-image overlay" style="background-image: url('{% static 'images/hero_4.jpg' %}');">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
+            <h2 class="text-white font-weight-bold">A Best Place To Stay. Reserve Now!</h2>
+          </div>
+          <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
+             <a href="https://www.booking.com/hotel/lk/pasidu-villa-athuraliya.en-gb.html?aid=2311236&label=en-lk-booking-desktop-IncWB4CtfrbYgbu3xC6gmwS652796017434%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-334108349%3Alp1009919%3Ali%3Adec%3Adm&sid=e936929ac10877552d1b098cb7e3d603&dist=0&group_adults=2&group_children=0&hapos=1&hpos=1&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&srepoch=1759665948&srpvid=68cd55067ef80849&type=total&ucfs=1&" class="btn btn-outline-white-primary py-3 text-white px-5">Reserve Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section footer-section">
+      <div class="container">
+        <div class="row mb-4">
+          
+          <!-- Legal Links -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Legal</h3>
+            <ul class="list-unstyled link">
+              <li class="mb-2"><a href="#" class="text-muted">Terms &amp; Conditions</a></li>
+              <li class="mb-2"><a href="#" class="text-muted">Privacy Policy</a></li>
+              <li><a href="#" class="text-muted">Cookie Policy</a></li>
+            </ul>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Explore</h3>
+            <ul class="list-unstyled link">
+              <li class="mb-2"><a href="{% url 'rooms' %}" class="text-muted">Rooms &amp; Suites</a></li>
+              <li class="mb-2"><a href="{% url 'about' %}" class="text-muted">About Us</a></li>
+              <li class="mb-2"><a href="{% url 'contact' %}" class="text-muted">Contact Us</a></li>
+              <li><a href="{% url 'events' %}" class="text-muted">Events</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Visit Us</h3>
+            <div class="contact-info">
+              <p class="mb-3">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-location h5 mr-2 text-primary"></span>
+                  Address:
+                </span>
+                <span class="text-muted">261/69, Prime Elite<br>Thalgasgoda Road<br>Ambalangoda, Sri Lanka</span>
+              </p>
+              <p class="mb-3">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-telephone h5 mr-2 text-primary"></span>
+                  Phone:
+                </span>
+                <a href="tel:+94774005317" class="text-muted">+94 77 400 5317</a>
+              </p>
+              <p class="mb-0">
+                <span class="d-block text-muted mb-1">
+                  <span class="ion-ios-email h5 mr-2 text-primary"></span>
+                  Email:
+                </span>
+                <a href="mailto:cinnamonchalet33@gmail.com" class="text-muted">cinnamonchalet33@gmail.com</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Get In Touch & Social -->
+          <div class="col-md-3 mb-5">
+            <h3 class="text-uppercase h6 mb-3">Connect</h3>
+            
+            <!-- Contact Methods -->
+            <div class="contact-methods mb-4">
+              <p class="mb-2">
+                <span class="fa fa-phone text-primary mr-2"></span>
+                <a href="tel:+94774005317" class="text-muted">Call Us</a>
+              </p>
+              <p class="mb-2">
+                <span class="fa fa-whatsapp text-primary mr-2"></span>
+                <a href="https://wa.me/94774005317" class="text-muted" target="_blank">WhatsApp</a>
+              </p>
+              <p class="mb-3">
+                <span class="fa fa-envelope text-primary mr-2"></span>
+                <a href="mailto:cinnamonchalet33@gmail.com" class="text-muted">Email Us</a>
+              </p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+              <h4 class="text-uppercase h6 mb-2">Follow Us</h4>
+              <div class="d-flex">
+                <a href="#" class="text-muted mr-3" aria-label="Facebook" title="Follow us on Facebook">
+                  <span class="fa fa-facebook fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted mr-3" aria-label="Instagram" title="Follow us on Instagram">
+                  <span class="fa fa-instagram fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted mr-3" aria-label="TripAdvisor" title="Check us on TripAdvisor">
+                  <span class="fa fa-tripadvisor fa-lg"></span>
+                </a>
+                <a href="#" class="text-muted" aria-label="Twitter" title="Follow us on Twitter">
+                  <span class="fa fa-twitter fa-lg"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Copyright & Bottom Social -->
+        <div class="row pt-5 border-top">
+          <div class="col-md-6">
+            <p class="text-muted mb-0">
+              Copyright &copy; <script>document.write(new Date().getFullYear());</script> 
+              Cinnamon Chalet. All rights reserved.
+            </p>
+          </div>
+          <div class="col-md-6 text-md-right">
+            <div class="social">
+              <a href="#" class="text-muted mr-3" aria-label="TripAdvisor">
+                <span class="fa fa-tripadvisor"></span>
+              </a>
+              <a href="#" class="text-muted mr-3" aria-label="Facebook">
+                <span class="fa fa-facebook"></span>
+              </a>
+              <a href="#" class="text-muted mr-3" aria-label="Instagram">
+                <span class="fa fa-instagram"></span>
+              </a>
+              <a href="#" class="text-muted" aria-label="Twitter">
+                <span class="fa fa-twitter"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'js/aos.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script> 
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script> 
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
