@@ -20,7 +20,8 @@ SECRET_KEY = 'django-insecure-08z4)_rz2#brx78rrhd5b3f9ktuk67&g$*3h0^tzro3hvn#c7f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
  
-ALLOWED_HOSTS = ['your-render-domain.onrender.com', 'www.yourcustomdomain.com']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
+
  # Add your domain or IP when deploying        
 
 
